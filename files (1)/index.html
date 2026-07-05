@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ESSPEE Electro Power Products | Voltage Stabilizers – Chennai</title>
+  <meta name="description" content="Buy ESSPEE voltage stabilizers for refrigerators and TVs. Direct from manufacturer. Free delivery in Chennai. Pan-India shipping available." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="esspee-logo.png" type="image/png" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════ -->
+  <header id="navbar">
+    <div class="nav-container">
+      <!-- Logo (SVG matches brand) -->
+      <a href="#home" class="nav-logo" aria-label="ESSPEE Home">
+        <img src="esspee-logo.png" alt="ESSPEE Logo" class="nav-logo-img" />
+        <span class="logo-sub">ELECTRO POWER PRODUCTS</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#services">Services</a>
+        <a href="#shipping">Shipping</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="nav-right">
+        <!-- Cart toggle button -->
+        <button class="cart-toggle-btn" id="cartToggleBtn" aria-label="Open cart" onclick="toggleCart()">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          <span class="cart-badge" id="cartBadge">0</span>
+        </button>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile nav drawer -->
+    <div class="mobile-nav" id="mobileNav">
+      <a href="#home"     onclick="closeMobileNav()">Home</a>
+      <a href="#products" onclick="closeMobileNav()">Products</a>
+      <a href="#services" onclick="closeMobileNav()">Services</a>
+      <a href="#shipping" onclick="closeMobileNav()">Shipping</a>
+      <a href="#contact"  onclick="closeMobileNav()">Contact</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════ -->
+  <section id="home" class="hero">
+    <div class="hero-bg-pattern" aria-hidden="true"></div>
+    <div class="hero-content container">
+      <div class="hero-text">
+        <div class="hero-tag">Chennai-Based Manufacturer</div>
+        <h1 class="hero-headline">
+          Power Protection<br />
+          <span class="hero-accent">You Can Trust.</span>
+        </h1>
+        <p class="hero-desc">
+          Direct-from-manufacturer voltage stabilizers for refrigerators and TVs.
+          Engineered in Chennai. Built to last 5+ years.
+        </p>
+        <div class="hero-btns">
+          <a href="#products" class="btn btn-red">Shop Now</a>
+          <a href="#contact"  class="btn btn-outline-white">Contact Us</a>
+        </div>
+        <div class="hero-trust">
+          <div class="trust-item"><span>⚡</span>5 Year Warranty</div>
+          <div class="trust-item"><span>🚚</span>Free Chennai Delivery</div>
+          <div class="trust-item"><span>🏭</span>Direct Manufacturer</div>
+        </div>
+      </div>
+      <div class="hero-logo-display" aria-hidden="true">
+        <div class="big-logo-wrap">
+          <img src="esspee-logo.png" alt="ESSPEE Logo" class="big-logo-img" />
+          <div class="big-logo-sub">VOLTAGE STABILIZER</div>
+        </div>
+        <!-- Voltage wave SVG -->
+        <svg class="wave-svg" viewBox="0 0 300 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <polyline points="0,30 40,30 60,5 80,55 100,30 140,30 160,10 175,50 190,30 240,30 260,8 275,52 290,30 300,30"
+            fill="none" stroke="#D42B2B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+        </svg>
+        <p class="hero-address">19/5, 19th Street, Balaji Nagar, Puzhuthivakkam, Chennai – 600091</p>
+      </div>
+    </div>
+
+    <!-- Wave divider -->
+    <div class="hero-wave" aria-hidden="true">
+      <svg viewBox="0 0 1440 72" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,36 L48,42 L96,30 L144,48 L192,24 L240,42 L288,30 L336,48 L384,24 L432,42 L480,30 L528,48 L576,24 L624,42 L672,30 L720,48 L768,24 L816,42 L864,30 L912,48 L960,24 L1008,42 L1056,30 L1104,48 L1152,24 L1200,42 L1248,30 L1296,48 L1344,24 L1392,42 L1440,36 L1440,72 L0,72 Z" fill="#f5f5f5"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       PRODUCTS
+  ═══════════════════════════════════════ -->
+  <section id="products" class="section products-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Our Products</div>
+        <h2 class="section-title">Shop Stabilizers</h2>
+        <p class="section-sub">All prices inclusive of GST. Free delivery within Chennai.</p>
+      </div>
+
+      <div class="products-grid" id="productsGrid">
+
+        <!-- Product 1: Grey -->
+        <article class="product-card" data-id="1">
+          <div class="product-img-wrap">
+            <img src="Screenshot_2026-07-05_222327.png" alt="ESSPEE SPF-50 Stabilizer Grey" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+            <div class="img-fallback">⚡<br/>Grey</div>
+            <div class="product-badge">Fridge</div>
+          </div>
+          <div class="product-body">
+            <h3 class="product-name">ESSPEE SPF-50 Stabilizer for Refrigerators</h3>
+            <p class="product-variant">Grey Colour</p>
+            <ul class="product-specs">
+              <li>Single &amp; Double Door Up to 300L</li>
+              <li>Working Range: 130V – 290V</li>
+              <li>LED Indicator with Time Delay</li>
+              <li>5 Years Warranty</li>
+            </ul>
+            <div class="product-footer">
+              <div class="product-price">₹990</div>
+              <button class="btn btn-red btn-sm add-to-cart"
+                data-id="1"
+                data-name="ESSPEE SPF-50 Stabilizer (Grey)"
+                data-price="990"
+                onclick="addToCart(this)">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 2: Cherry Red -->
+        <article class="product-card" data-id="2">
+          <div class="product-img-wrap">
+            <img src="Screenshot_2026-07-05_222445.png" alt="ESSPEE SPF-50 Stabilizer Cherry Red" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+            <div class="img-fallback">⚡<br/>Cherry</div>
+            <div class="product-badge">Fridge</div>
+          </div>
+          <div class="product-body">
+            <h3 class="product-name">ESSPEE SPF-50 Voltage Stabilizer for Refrigerators</h3>
+            <p class="product-variant">Cherry Red</p>
+            <ul class="product-specs">
+              <li>Single &amp; Double Door Up to 300L</li>
+              <li>Working Range: 130V – 290V</li>
+              <li>Convenient LED Indicator, Time Delay</li>
+              <li>5 Years Warranty</li>
+            </ul>
+            <div class="product-footer">
+              <div class="product-price">₹1,090</div>
+              <button class="btn btn-red btn-sm add-to-cart"
+                data-id="2"
+                data-name="ESSPEE SPF-50 Stabilizer (Cherry Red)"
+                data-price="1090"
+                onclick="addToCart(this)">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 3: Bright Red -->
+        <article class="product-card" data-id="3">
+          <div class="product-img-wrap">
+            <img src="Screenshot_2026-07-05_222505.png" alt="ESSPEE SPF-50 Stabilizer Bright Red" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+            <div class="img-fallback">⚡<br/>Red</div>
+            <div class="product-badge">Fridge</div>
+          </div>
+          <div class="product-body">
+            <h3 class="product-name">ESSPEE SPF-50 Stabilizer for Refrigerators</h3>
+            <p class="product-variant">Bright Red</p>
+            <ul class="product-specs">
+              <li>Single &amp; Double Door Up to 300L</li>
+              <li>Working Range: 130V – 290V</li>
+              <li>LED Indicator with Time Delay</li>
+              <li>5 Years Warranty</li>
+            </ul>
+            <div class="product-footer">
+              <div class="product-price">₹999</div>
+              <button class="btn btn-red btn-sm add-to-cart"
+                data-id="3"
+                data-name="ESSPEE SPF-50 Stabilizer (Bright Red)"
+                data-price="999"
+                onclick="addToCart(this)">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 4: TV Standard -->
+        <article class="product-card" data-id="4">
+          <div class="product-img-wrap">
+            <img src="Screenshot_2026-07-05_222525.png" alt="ESSPEE Voltage Stabilizer for LED/LCD TV Standard" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+            <div class="img-fallback">📺<br/>Standard</div>
+            <div class="product-badge tv-badge">TV</div>
+          </div>
+          <div class="product-body">
+            <h3 class="product-name">ESSPEE Voltage Stabilizer for LED/LCD/Smart TV</h3>
+            <p class="product-variant">Standard – Black</p>
+            <ul class="product-specs">
+              <li>For 32/43/55 inch+ TVs</li>
+              <li>Set Top Box + Home Theater / Gaming Console</li>
+              <li>Range: 90V – 290V</li>
+              <li>5 Years Warranty</li>
+            </ul>
+            <div class="product-footer">
+              <div class="product-price">₹1,190</div>
+              <button class="btn btn-red btn-sm add-to-cart"
+                data-id="4"
+                data-name="ESSPEE Voltage Stabilizer for LED/LCD TV (Standard)"
+                data-price="1190"
+                onclick="addToCart(this)">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 5: TV Premium -->
+        <article class="product-card featured-card" data-id="5">
+          <div class="product-img-wrap">
+            <img src="Screenshot_2026-07-05_222539.png" alt="ESSPEE Voltage Stabilizer for Smart LED TV Premium" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+            <div class="img-fallback">📺<br/>Premium</div>
+            <div class="product-badge tv-badge">TV – Premium</div>
+          </div>
+          <div class="product-body">
+            <h3 class="product-name">ESSPEE Voltage Stabilizer for Smart LED TV</h3>
+            <p class="product-variant">Premium / Heavy Duty – Black</p>
+            <ul class="product-specs">
+              <li>For 32/43/55/85 inch+ TVs</li>
+              <li>Set Top Box + Home Theater / Gaming Console</li>
+              <li>Range: 90V – 290V</li>
+              <li>5 Years Warranty</li>
+            </ul>
+            <div class="product-footer">
+              <div class="product-price">₹1,690</div>
+              <button class="btn btn-red btn-sm add-to-cart"
+                data-id="5"
+                data-name="ESSPEE Voltage Stabilizer for Smart LED TV (Premium)"
+                data-price="1690"
+                onclick="addToCart(this)">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SERVICES
+  ═══════════════════════════════════════ -->
+  <section id="services" class="section services-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">What We Do</div>
+        <h2 class="section-title">Our Services</h2>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">🏭</div>
+          <h3>Stabilizer Manufacturing</h3>
+          <p>Custom voltage stabilizers designed and built in-house for residential and commercial needs.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">⚙️</div>
+          <h3>Servo Stabilizers</h3>
+          <p>Industrial-grade servo stabilizers for factories, hospitals, and high-load commercial setups.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🔋</div>
+          <h3>Inverter Sales</h3>
+          <p>Reliable inverter solutions for homes and businesses to ensure uninterrupted power supply.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🔧</div>
+          <h3>Repair &amp; Service</h3>
+          <p>Expert repair and maintenance service for all stabilizer and inverter brands across Chennai.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SHIPPING POLICY
+  ═══════════════════════════════════════ -->
+  <section id="shipping" class="section shipping-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Delivery Info</div>
+        <h2 class="section-title">Shipping Policy</h2>
+      </div>
+      <div class="shipping-cards">
+        <div class="shipping-card free-ship">
+          <div class="shipping-icon">🚚</div>
+          <h3>Free Delivery</h3>
+          <p class="shipping-loc">Within Chennai</p>
+          <p>Enjoy completely free home delivery for all orders within Chennai city limits.</p>
+        </div>
+        <div class="shipping-card paid-ship">
+          <div class="shipping-icon">📦</div>
+          <h3>Pan-India Delivery</h3>
+          <p class="shipping-loc">All Over India</p>
+          <p>We ship to all states across India. Delivery charges apply based on distance and weight, and are to be <strong>paid at doorstep upon delivery only</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       CONTACT
+  ═══════════════════════════════════════ -->
+  <section id="contact" class="section contact-section">
+    <div class="container contact-grid">
+      <div class="contact-info">
+        <div class="section-eyebrow">Get In Touch</div>
+        <h2 class="section-title">Contact Us</h2>
+        <div class="contact-items">
+          <div class="contact-item">
+            <span class="ci-icon">📍</span>
+            <div>
+              <strong>Address</strong>
+              <p>19/5, 19th Street, Balaji Nagar,<br/>Puzhuthivakkam, Chennai – 600091</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="ci-icon">📱</span>
+            <div>
+              <strong>WhatsApp / Phone</strong>
+              <a href="https://wa.me/919025059689" target="_blank" rel="noopener">9025059689</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="ci-icon">✉️</span>
+            <div>
+              <strong>Email</strong>
+              <a href="mailto:esspeeelectropowerproducts@gmail.com">esspeeelectropowerproducts@gmail.com</a>
+            </div>
+          </div>
+        </div>
+        <a href="https://wa.me/919025059689?text=Hi%2C%20I%20need%20help%20with%20ESSPEE%20products." target="_blank" class="btn btn-red whatsapp-btn">
+          💬 Chat on WhatsApp
+        </a>
+      </div>
+      <div class="map-placeholder">
+        <div class="map-inner">
+          <span style="font-size:2.5rem">🗺️</span>
+          <p><strong>ESSPEE Electro Power Products</strong></p>
+          <p>19/5, 19th Street, Balaji Nagar,<br/>Puzhuthivakkam, Chennai – 600091</p>
+          <a href="https://maps.google.com/?q=Puzhuthivakkam+Chennai+600091" target="_blank" rel="noopener" class="btn btn-outline-dark" style="margin-top:16px">Open in Google Maps</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="esspee-logo.png" alt="ESSPEE Logo" class="footer-logo-img" />
+        <p class="footer-tagline">ELECTRO POWER PRODUCTS</p>
+        <p class="footer-addr">19/5, 19th Street, Balaji Nagar,<br/>Puzhuthivakkam, Chennai – 600091</p>
+      </div>
+      <div class="footer-links">
+        <strong>Quick Links</strong>
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#services">Services</a>
+        <a href="#shipping">Shipping</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-contact">
+        <strong>Contact</strong>
+        <a href="https://wa.me/919025059689" target="_blank">💬 9025059689</a>
+        <a href="mailto:esspeeelectropowerproducts@gmail.com">✉️ Email Us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 ESSPEE Electro Power Products. All rights reserved. | Chennai, Tamil Nadu</p>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════
+       CART SIDEBAR
+  ═══════════════════════════════════════ -->
+  <div class="cart-backdrop" id="cartBackdrop" onclick="toggleCart()"></div>
+  <aside class="cart-sidebar" id="cartSidebar" aria-label="Shopping cart">
+    <div class="cart-header">
+      <h2>🛒 Your Cart</h2>
+      <button class="cart-close" onclick="toggleCart()" aria-label="Close cart">✕</button>
+    </div>
+
+    <div class="cart-body" id="cartBody">
+      <div class="cart-empty" id="cartEmpty">
+        <p>⚡ Your cart is empty.</p>
+        <a href="#products" onclick="toggleCart()" class="btn btn-red btn-sm">Browse Products</a>
+      </div>
+      <ul class="cart-items" id="cartItems"></ul>
+    </div>
+
+    <div class="cart-footer" id="cartFooter" style="display:none">
+      <div class="cart-total-row">
+        <span>Total</span>
+        <strong id="cartTotal">₹0</strong>
+      </div>
+      <button class="btn btn-red btn-full" onclick="showCheckout()">Proceed to Checkout →</button>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════════════════════════
+       CHECKOUT MODAL
+  ═══════════════════════════════════════ -->
+  <div class="modal-backdrop" id="checkoutBackdrop" onclick="closeCheckout()"></div>
+  <div class="checkout-modal" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+    <div class="checkout-modal-inner">
+      <div class="checkout-header">
+        <h2 id="checkoutTitle">Complete Your Order</h2>
+        <button class="modal-close" onclick="closeCheckout()" aria-label="Close checkout">✕</button>
+      </div>
+
+      <div class="checkout-body" id="checkoutBody">
+
+        <!-- Order Summary in modal -->
+        <div class="checkout-order-summary" id="checkoutSummary"></div>
+
+        <form id="checkoutForm" novalidate onsubmit="return false;">
+
+          <!-- Customer Details -->
+          <div class="form-section-title">👤 Your Details</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="c-name">Full Name *</label>
+              <input type="text" id="c-name" placeholder="Your full name" required />
+            </div>
+            <div class="form-group">
+              <label for="c-phone">Phone / WhatsApp *</label>
+              <input type="tel" id="c-phone" placeholder="+91 XXXXX XXXXX" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="c-address">Full Delivery Address *</label>
+            <textarea id="c-address" rows="3" placeholder="Door No., Street, Area, City, State, PIN Code" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="c-shipping">Shipping Location *</label>
+            <select id="c-shipping" required onchange="updateShippingNote()">
+              <option value="">-- Select location --</option>
+              <option value="chennai">Within Chennai (Free Delivery)</option>
+              <option value="outside">Outside Chennai (Pay Delivery Charge at Doorstep)</option>
+            </select>
+            <p class="shipping-note" id="shippingNote"></p>
+          </div>
+
+          <!-- Order Total -->
+          <div class="checkout-total-box">
+            <div class="checkout-total-label">Order Total (Products)</div>
+            <div class="checkout-total-amount" id="checkoutTotalDisplay">₹0</div>
+            <div class="checkout-delivery-note" id="checkoutDeliveryNote">Select shipping location above</div>
+          </div>
+
+          <!-- GPay Payment -->
+          <div class="form-section-title" style="margin-top:24px">💳 Payment via GPay</div>
+          <div class="gpay-instructions">
+            <div class="gpay-number-row">
+              <span class="gpay-icon">📱</span>
+              <div>
+                <div class="gpay-label-sm">GPay / PhonePe / UPI Number</div>
+                <div class="gpay-num">9025059689</div>
+              </div>
+              <button type="button" class="copy-btn" onclick="copyUPI('9025059689', this)">Copy</button>
+            </div>
+            <div class="gpay-pay-amount">
+              Pay exactly: <strong id="gpayPayAmount">₹0</strong>
+            </div>
+            <p class="gpay-note" id="gpayInstructionText">Please pay the total amount via GPay to <strong>9025059689</strong>. After paying, upload a screenshot of your payment confirmation below.</p>
+          </div>
+
+          <!-- Screenshot Upload -->
+          <div class="form-group" style="margin-top:16px">
+            <label for="c-screenshot">Upload Payment Screenshot *</label>
+            <div class="file-upload-area" id="fileUploadArea">
+              <input type="file" id="c-screenshot" accept="image/*" onchange="handleScreenshot(this)" />
+              <div class="file-upload-ui" onclick="document.getElementById('c-screenshot').click()">
+                <span class="upload-ico">📸</span>
+                <span class="upload-txt">Click to upload payment screenshot</span>
+                <span class="upload-hint">JPG, PNG, WEBP · Max 5MB</span>
+              </div>
+              <div class="file-preview-wrap" id="filePreviewWrap" style="display:none">
+                <img id="filePreviewImg" src="" alt="Payment screenshot preview" />
+                <button type="button" class="remove-file-btn" onclick="removeScreenshot()">✕ Remove</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="c-utr">UPI / Transaction Reference ID (optional)</label>
+            <input type="text" id="c-utr" placeholder="e.g. 4082765432198765" />
+          </div>
+
+          <!-- Place Order -->
+          <button type="button" class="btn btn-red btn-full place-order-btn" id="placeOrderBtn" onclick="placeOrder()">
+            ✅ Place Order via WhatsApp &amp; Email
+          </button>
+
+          <p class="order-note">
+            Your order will open in WhatsApp (<strong>9025059689</strong>) and a mailto email to <strong>esspeeelectropowerproducts@gmail.com</strong>.
+            Please send both to confirm your order.
+          </p>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
