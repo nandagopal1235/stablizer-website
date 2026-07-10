@@ -21,7 +21,7 @@
       <!-- Logo (SVG matches brand) -->
       <a href="#home" class="nav-logo" aria-label="ESSPEE Home">
         <img src="esspee-logo.png" alt="ESSPEE Logo" class="nav-logo-img" />
-        <span class="logo-sub">ESSPEE ELECTRO POWER PRODUCTS</span>
+        <span class="logo-sub">ELECTRO POWER PRODUCTS</span>
       </a>
 
       <nav class="nav-links" aria-label="Main navigation">
@@ -461,6 +461,12 @@
           </div>
 
           <div class="form-group">
+            <label for="c-email">Email Address *</label>
+            <input type="email" id="c-email" placeholder="you@example.com" required />
+            <p class="field-hint">We'll send your order confirmation here.</p>
+          </div>
+
+          <div class="form-group">
             <label for="c-address">Full Delivery Address *</label>
             <textarea id="c-address" rows="3" placeholder="Door No., Street, Area, City, State, PIN Code" required></textarea>
           </div>
@@ -523,13 +529,14 @@
 
           <!-- Place Order -->
           <button type="button" class="btn btn-red btn-full place-order-btn" id="placeOrderBtn" onclick="placeOrder()">
-            ✅ Place Order via WhatsApp &amp; Email
+            ✅ Place Order
           </button>
 
           <p class="order-note">
-            Your order will open in WhatsApp (<strong>9025059689</strong>) and a mailto email to <strong>esspeeelectropowerproducts@gmail.com</strong>.
-            Please send both to confirm your order.
+            Your order and payment screenshot will be emailed to us automatically, and you'll receive a confirmation email with your receipt. We'll also open WhatsApp so you can message us directly.
           </p>
+
+          <p class="order-status" id="orderStatus" style="display:none"></p>
 
         </form>
       </div>

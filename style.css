@@ -722,7 +722,8 @@ footer {
   letter-spacing: 0.04em;
   margin-bottom: 8px;
 }
-.logo-pee-foot { }
+.logo-pee-foot {
+ }
 .footer-tagline {
   font-size: 0.65rem;
   letter-spacing: 0.18em;
@@ -1157,6 +1158,37 @@ footer {
   line-height: 1.6;
 }
 .order-note strong { color: var(--black); }
+
+.field-hint {
+  font-size: 0.75rem;
+  color: var(--grey);
+  margin-top: 4px;
+}
+
+.order-status {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.5;
+}
+.order-status.success {
+  background: rgba(34,197,94,0.12);
+  color: #16803C;
+  border: 1px solid rgba(34,197,94,0.35);
+}
+.order-status.error {
+  background: rgba(212,43,43,0.1);
+  color: var(--red);
+  border: 1px solid rgba(212,43,43,0.3);
+}
+.order-status.loading {
+  background: rgba(0,0,0,0.05);
+  color: var(--grey-dark);
+  border: 1px solid rgba(0,0,0,0.1);
+}
 
 /* ── SCROLL REVEAL ── */
 .reveal {

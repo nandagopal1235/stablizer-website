@@ -10,9 +10,14 @@ const WA_NUMBER   = '919025059689';
 const EMAIL_TO    = 'esspeeelectropowerproducts@gmail.com';
 const COMPANY     = 'ESSPEE Electro Power Products';
 
+/* PASTE your Google Apps Script Web App URL here after deploying it.
+   Instructions are in SETUP-GUIDE.md */
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby8cjrVfnGqE5vMvtCwav-xs6-RMpXRlnKSHfsqXoQv42G_0GBosdNm66qCRybpU87C/exec';
+
 /* ── STATE ── */
 let cart = []; // { id, name, price, qty }
 let screenshotFile = null;
+let screenshotBase64 = null; // full data URL, e.g. "data:image/png;base64,...."
 
 /* ════════════════════════════════════════
    NAVBAR – Scroll & Hamburger
@@ -229,8 +234,12 @@ function showCheckout() {
   document.getElementById('shippingNote').className   = 'shipping-note';
   document.getElementById('checkoutDeliveryNote').textContent = 'Select shipping location above';
   screenshotFile = null;
+  screenshotBase64 = null;
   document.getElementById('filePreviewWrap').style.display = 'none';
   document.getElementById('fileUploadArea').querySelector('.file-upload-ui').style.display = 'flex';
+  const statusEl = document.getElementById('orderStatus');
+  statusEl.style.display = 'none';
+  statusEl.className = 'order-status';
 
   // Show modal via class (CSS handles display)
   document.getElementById('checkoutModal').classList.add('active');
@@ -280,6 +289,7 @@ function handleScreenshot(input) {
   screenshotFile = file;
   const reader = new FileReader();
   reader.onload = e => {
+    screenshotBase64 = e.target.result;
     document.getElementById('filePreviewImg').src = e.target.result;
     document.getElementById('filePreviewWrap').style.display = 'block';
     document.getElementById('fileUploadArea').querySelector('.file-upload-ui').style.display = 'none';
@@ -289,6 +299,7 @@ function handleScreenshot(input) {
 
 function removeScreenshot() {
   screenshotFile = null;
+  screenshotBase64 = null;
   document.getElementById('c-screenshot').value = '';
   document.getElementById('filePreviewWrap').style.display = 'none';
   document.getElementById('fileUploadArea').querySelector('.file-upload-ui').style.display = 'flex';
@@ -318,11 +329,12 @@ function copyUPI(num, btn) {
 }
 
 /* ════════════════════════════════════════
-   PLACE ORDER → WhatsApp + Email
+   PLACE ORDER → Backend (email + sheet log) + WhatsApp
 ════════════════════════════════════════ */
-function placeOrder() {
+async function placeOrder() {
   /* ── Validation ── */
   const name     = document.getElementById('c-name').value.trim();
+  const email    = document.getElementById('c-email').value.trim();
   const phone    = document.getElementById('c-phone').value.trim();
   const address  = document.getElementById('c-address').value.trim();
   const shipping = document.getElementById('c-shipping').value;
@@ -330,32 +342,67 @@ function placeOrder() {
 
   const errors = [];
   if (!name)     errors.push('Full Name');
+  if (!email)    errors.push('Email Address');
   if (!phone)    errors.push('Phone Number');
   if (!address)  errors.push('Delivery Address');
   if (!shipping) errors.push('Shipping Location');
-  if (!screenshotFile) errors.push('Payment Screenshot');
+  if (!screenshotFile || !screenshotBase64) errors.push('Payment Screenshot');
 
   if (errors.length) {
     alert('⚠️ Please fill in the following required fields:\n\n• ' + errors.join('\n• '));
     return;
   }
 
-  /* ── Build order data ── */
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('PASTE_YOUR') === 0) {
+    alert('⚠️ Order backend is not connected yet. Please add your Apps Script URL in script.js (see SETUP-GUIDE.md).');
+    return;
+  }
+
   const totalAmt = cart.reduce((s, i) => s + i.price * i.qty, 0);
   const shippingLabel = shipping === 'chennai'
     ? 'Within Chennai (Free Delivery)'
     : 'Outside Chennai (Delivery Charge at Doorstep)';
 
-  const itemLines = cart.map(item =>
-    `  • ${item.name} × ${item.qty} = ₹${(item.price * item.qty).toLocaleString('en-IN')}`
-  ).join('\n');
+  const btn = document.getElementById('placeOrderBtn');
+  const origBtnText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Submitting Order...';
+  showOrderStatus('⏳ Submitting your order, please wait…', 'loading');
 
-  /* ── WhatsApp Message ── */
-  const waMsg =
+  const payload = {
+    name, email, phone, address, shipping, utr,
+    items: cart.map(i => ({ name: i.name, qty: i.qty, price: i.price })),
+    totalAmount: totalAmt,
+    screenshotBase64,
+    screenshotType: screenshotFile.type,
+    screenshotName: screenshotFile.name
+  };
+
+  try {
+    const resp = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      // text/plain avoids a CORS preflight that Apps Script can't handle;
+      // the backend still parses this as JSON.
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await resp.json();
+    if (!result.success) {
+      throw new Error(result.error || 'Something went wrong on the server.');
+    }
+
+    /* ── Order confirmed: open WhatsApp for instant contact ── */
+    const itemLines = cart.map(item =>
+      `  • ${item.name} × ${item.qty} = ₹${(item.price * item.qty).toLocaleString('en-IN')}`
+    ).join('\n');
+
+    const waMsg =
 `🔴 NEW ORDER PLACED - ESSPEE
 ━━━━━━━━━━━━━━━━━━━━━━
 👤 *Customer Details*
    Name    : ${name}
+   Email   : ${email}
    Phone   : ${phone}
    Address : ${address}
    Shipping: ${shippingLabel}
@@ -369,58 +416,37 @@ ${itemLines}
    *Amount Paid   : ₹${totalAmt.toLocaleString('en-IN')}*
    ${utr ? `UTR / Ref ID   : ${utr}` : ''}
 
-✅ *Payment Screenshot uploaded by customer.*
+✅ *Payment screenshot + confirmation already emailed automatically.*
 
 📌 Please confirm this order and share delivery details.
 ━━━━━━━━━━━━━━━━━━━━━━
 ${COMPANY}`;
 
-  /* ── Email Body ── */
-  const emailSubject = `New Order – ${COMPANY} | ${name} | ₹${totalAmt.toLocaleString('en-IN')}`;
-  const emailBody =
-`NEW ORDER PLACED – ESSPEE ELECTRO POWER PRODUCTS
-=================================================
+    window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMsg)}`, '_blank');
 
-CUSTOMER DETAILS
-  Name     : ${name}
-  Phone    : ${phone}
-  Address  : ${address}
-  Shipping : ${shippingLabel}
+    showOrderStatus('✅ Order placed! A confirmation email is on its way to ' + email + '.', 'success');
 
-ITEMS ORDERED
-${itemLines}
+    setTimeout(() => {
+      closeCheckout();
+      cart = [];
+      screenshotFile = null;
+      screenshotBase64 = null;
+      updateCartUI();
+    }, 2200);
 
-PAYMENT SUMMARY
-  Products Total : Rs. ${totalAmt.toLocaleString('en-IN')}
-  Delivery       : ${shipping === 'chennai' ? 'FREE' : 'Pay at Doorstep'}
-  Amount Paid    : Rs. ${totalAmt.toLocaleString('en-IN')}
-  ${utr ? `UTR / Ref ID   : ${utr}` : ''}
+  } catch (err) {
+    showOrderStatus('❌ ' + err.message + ' — please try again, or WhatsApp us directly at 9025059689.', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = origBtnText;
+  }
+}
 
-  ** Payment screenshot uploaded by customer. **
-
-=================================================
-Order placed via ESSPEE website.
-${COMPANY}
-19/5, 19th Street, Balaji Nagar, Puzhuthivakkam, Chennai – 600091
-WhatsApp: 9025059689 | Email: ${EMAIL_TO}`;
-
-  /* ── Fire WhatsApp deep-link ── */
-  const waURL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMsg)}`;
-  window.open(waURL, '_blank');
-
-  /* ── Fire Email mailto ── */
-  const mailURL = `mailto:${EMAIL_TO}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-  setTimeout(() => {
-    window.location.href = mailURL;
-  }, 800); // slight delay so WA opens first
-
-  /* ── Clear cart and close checkout ── */
-  setTimeout(() => {
-    closeCheckout();
-    cart = [];
-    screenshotFile = null;
-    updateCartUI();
-  }, 400);
+function showOrderStatus(message, type) {
+  const el = document.getElementById('orderStatus');
+  el.textContent = message;
+  el.className = 'order-status ' + type;
+  el.style.display = 'block';
 }
 
 /* ════════════════════════════════════════
