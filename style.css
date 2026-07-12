@@ -505,6 +505,150 @@ ul   { list-style: none; }
 }
 .tv-badge { background: var(--red); }
 
+.zoom-badge {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.55);
+  color: var(--white);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.product-card:hover .zoom-badge { opacity: 1; }
+.gallery-main-img { cursor: zoom-in; }
+
+/* Thumbnail strip under each product image */
+.gallery-thumbs {
+  display: flex;
+  gap: 6px;
+  padding: 10px 12px 0;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.gallery-thumbs::-webkit-scrollbar { height: 4px; }
+.gallery-thumbs::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.gallery-thumb {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s ease, border-color 0.2s ease;
+  background: var(--bg);
+}
+.gallery-thumb:hover { opacity: 1; }
+.gallery-thumb.active {
+  border-color: var(--red);
+  opacity: 1;
+}
+
+/* ── LIGHTBOX ── */
+.lightbox-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 3000;
+  display: none;
+}
+.lightbox-backdrop.active { display: block; }
+
+.lightbox-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 3001;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.lightbox-modal.active { display: flex; }
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255,255,255,0.12);
+  color: var(--white);
+  border: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 2;
+}
+.lightbox-close:hover { background: rgba(255,255,255,0.22); }
+
+.lightbox-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.12);
+  color: var(--white);
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox-arrow:hover { background: rgba(255,255,255,0.22); }
+.lightbox-prev { left: 20px; }
+.lightbox-next { right: 20px; }
+
+.lightbox-img-wrap {
+  max-width: min(900px, 90vw);
+  max-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox-img {
+  max-width: 100%;
+  max-height: 70vh;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  object-fit: contain;
+}
+
+.lightbox-thumbs {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+  overflow-x: auto;
+  max-width: 90vw;
+  padding: 4px;
+}
+.lightbox-thumbs .gallery-thumb {
+  width: 56px;
+  height: 56px;
+  border-color: rgba(255,255,255,0.25);
+}
+.lightbox-thumbs .gallery-thumb.active { border-color: var(--red); }
+
+@media (max-width: 640px) {
+  .lightbox-arrow { width: 38px; height: 38px; font-size: 1.4rem; }
+  .lightbox-prev { left: 8px; }
+  .lightbox-next { right: 8px; }
+}
+
 .product-body {
   padding: 20px;
   display: flex;
@@ -722,8 +866,7 @@ footer {
   letter-spacing: 0.04em;
   margin-bottom: 8px;
 }
-.logo-pee-foot {
- }
+.logo-pee-foot { }
 .footer-tagline {
   font-size: 0.65rem;
   letter-spacing: 0.18em;
@@ -1163,6 +1306,17 @@ footer {
   font-size: 0.75rem;
   color: var(--grey);
   margin-top: 4px;
+}
+
+/* Honeypot field — visually hidden but present in the DOM and tabbable-off,
+   so simple bots that auto-fill forms still trip it. */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 .order-status {

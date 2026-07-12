@@ -11,8 +11,54 @@ const EMAIL_TO    = 'esspeeelectropowerproducts@gmail.com';
 const COMPANY     = 'ESSPEE Electro Power Products';
 
 /* PASTE your Google Apps Script Web App URL here after deploying it.
-   Instructions are in SETUP-GUIDE.md */
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby8cjrVfnGqE5vMvtCwav-xs6-RMpXRlnKSHfsqXoQv42G_0GBosdNm66qCRybpU87C/exec';
+   Instructions are in SETUP-GUIDE.md
+   (If you already deployed this before, keep your existing URL here —
+   you don't need a new one, just the SECRET below.) */
+const APPS_SCRIPT_URL = 'PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
+
+/* Must exactly match SHARED_SECRET in your GoogleAppsScript.gs.
+   This is a basic filter against random bots, not a true secret — anyone
+   can view this file's source, so don't rely on it alone. See
+   SECURITY-NOTES.md for what actually protects you. */
+const APPS_SCRIPT_SECRET = '2PEsuxCJu7kO0J5G1V_yq8MlkbuUxxBZ';
+
+/* ── PRODUCT IMAGE GALLERIES ──
+   First image in each array is the main product photo already used on the
+   card; the rest are extra images shown as thumbnails + in the lightbox. */
+const PRODUCT_GALLERIES = {
+  '1': [
+    'Screenshot_2026-07-05_222327.png',
+    'p1-features-banner.jpg',
+    'p1-warranty-banner.jpg'
+  ],
+  '2': [
+    'Screenshot_2026-07-05_222445.png',
+    'p2-features-banner.jpg',
+    'p2-warranty-banner.jpg'
+  ],
+  '3': [
+    'Screenshot_2026-07-05_222505.png',
+    'p3-features-banner.jpg',
+    'p3-warranty-banner.jpg'
+  ],
+  '4': [
+    'Screenshot_2026-07-05_222525.png',
+    'p4-features-banner.jpg',
+    'p4-warranty-banner.jpg'
+  ],
+  '5': [
+    'Screenshot_2026-07-05_222539.png',
+    'p5-6-hero.jpg',
+    'p5-1-lifestyle-features.jpg',
+    'p5-2-tv-compatibility.jpg',
+    'p5-3-wallmount-lifestyle.jpg',
+    'p5-5-tech-banner.jpg',
+    'p5-4-installation.jpg'
+  ]
+};
+
+let lightboxProductId = null;
+let lightboxIndex = 0;
 
 /* ── STATE ── */
 let cart = []; // { id, name, price, qty }
@@ -370,6 +416,8 @@ async function placeOrder() {
   showOrderStatus('⏳ Submitting your order, please wait…', 'loading');
 
   const payload = {
+    secret: APPS_SCRIPT_SECRET,
+    website: document.getElementById('c-website') ? document.getElementById('c-website').value : '', // honeypot — must stay empty
     name, email, phone, address, shipping, utr,
     items: cart.map(i => ({ name: i.name, qty: i.qty, price: i.price })),
     totalAmount: totalAmt,
@@ -472,5 +520,129 @@ document.addEventListener('keydown', e => {
   }
 });
 
+/* ════════════════════════════════════════
+   PRODUCT IMAGE GALLERY + LIGHTBOX
+════════════════════════════════════════ */
+
+/**
+ * Build the small thumbnail strip under each product card image.
+ */
+function initProductGalleries() {
+  Object.keys(PRODUCT_GALLERIES).forEach(id => {
+    const images = PRODUCT_GALLERIES[id];
+    const thumbsEl = document.getElementById('thumbs-' + id);
+    if (!thumbsEl || images.length < 2) return; // no extra thumbs needed
+
+    thumbsEl.innerHTML = images.map((src, i) => `
+      <img
+        src="${src}"
+        class="gallery-thumb${i === 0 ? ' active' : ''}"
+        alt="View ${i + 1}"
+        loading="lazy"
+        onclick="swapMainImage(event, '${id}', ${i})"
+      />
+    `).join('');
+  });
+}
+
+/**
+ * Swap the main product-card image when a thumbnail is clicked.
+ */
+function swapMainImage(event, productId, index) {
+  event.stopPropagation();
+  const images = PRODUCT_GALLERIES[productId];
+  if (!images || !images[index]) return;
+
+  const mainImg = document.getElementById('mainimg-' + productId);
+  if (mainImg) mainImg.src = images[index];
+
+  const thumbsEl = document.getElementById('thumbs-' + productId);
+  if (thumbsEl) {
+    thumbsEl.querySelectorAll('.gallery-thumb').forEach((t, i) => {
+      t.classList.toggle('active', i === index);
+    });
+  }
+}
+
+/**
+ * Open the fullscreen lightbox for a product, starting at the image
+ * currently shown on its card.
+ */
+function openLightbox(productId) {
+  const images = PRODUCT_GALLERIES[productId];
+  if (!images) return;
+
+  lightboxProductId = productId;
+
+  const mainImg = document.getElementById('mainimg-' + productId);
+  const currentSrc = mainImg ? mainImg.getAttribute('src') : images[0];
+  lightboxIndex = Math.max(0, images.indexOf(currentSrc));
+
+  renderLightboxThumbs();
+  updateLightboxImage();
+
+  document.getElementById('lightboxModal').classList.add('active');
+  document.getElementById('lightboxBackdrop').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightboxModal').classList.remove('active');
+  document.getElementById('lightboxBackdrop').classList.remove('active');
+  document.body.style.overflow = '';
+  lightboxProductId = null;
+}
+
+function lightboxNav(delta) {
+  if (!lightboxProductId) return;
+  const images = PRODUCT_GALLERIES[lightboxProductId];
+  lightboxIndex = (lightboxIndex + delta + images.length) % images.length;
+  updateLightboxImage();
+}
+
+function updateLightboxImage() {
+  if (!lightboxProductId) return;
+  const images = PRODUCT_GALLERIES[lightboxProductId];
+  document.getElementById('lightboxImg').src = images[lightboxIndex];
+
+  // keep the card's own gallery in sync with whatever the person is viewing
+  const mainImg = document.getElementById('mainimg-' + lightboxProductId);
+  if (mainImg) mainImg.src = images[lightboxIndex];
+  const thumbsEl = document.getElementById('thumbs-' + lightboxProductId);
+  if (thumbsEl) {
+    thumbsEl.querySelectorAll('.gallery-thumb').forEach((t, i) => {
+      t.classList.toggle('active', i === lightboxIndex);
+    });
+  }
+
+  document.querySelectorAll('#lightboxThumbs .gallery-thumb').forEach((t, i) => {
+    t.classList.toggle('active', i === lightboxIndex);
+  });
+}
+
+function renderLightboxThumbs() {
+  const images = PRODUCT_GALLERIES[lightboxProductId];
+  const el = document.getElementById('lightboxThumbs');
+  if (images.length < 2) { el.innerHTML = ''; return; }
+
+  el.innerHTML = images.map((src, i) => `
+    <img
+      src="${src}"
+      class="gallery-thumb${i === lightboxIndex ? ' active' : ''}"
+      alt="View ${i + 1}"
+      onclick="lightboxIndex = ${i}; updateLightboxImage();"
+    />
+  `).join('');
+}
+
+/* Keyboard navigation inside the lightbox */
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightboxModal').classList.contains('active')) return;
+  if (e.key === 'ArrowLeft') lightboxNav(-1);
+  if (e.key === 'ArrowRight') lightboxNav(1);
+  if (e.key === 'Escape') closeLightbox();
+});
+
 /* ── Init ── */
 updateCartUI();
+initProductGalleries();
